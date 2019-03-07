@@ -165,6 +165,7 @@ function build_csd() {
 
     info cleaning csd working dir
     rm -rf "${TARGET_CSD:?}/${name}-${version}"
+    info "csd build in ${TARGET_CSD}/${name}-${version}.jar"
 }
 
 

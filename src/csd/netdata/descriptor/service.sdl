@@ -4,6 +4,7 @@
   "description": "Real-time performance monitoring",
   "version": "%VERSION%",
   "compatibility": {
+    "generation" : 1,
     "cdhVersion": {
       "min": "5.11.0"
     }

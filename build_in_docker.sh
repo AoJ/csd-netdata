@@ -2,8 +2,7 @@
 set -euxo pipefail
 
 # run with command:
-# docker run --rm -v "$(pwd)":"$(pwd)" -w "$(pwd)" alpine:3.7 /bin/sh build_in_docker.sh
-# docker run -ti --rm -v "$(pwd)":"$(pwd)" -w "$(pwd)" alpine:3.7 /bin/sh
+# docker run --rm -v "$(pwd)":"$(pwd)" -w "$(pwd)" alpine:3.7 /bin/sh build_in_docker.sh netdata /opt/cloudera/parcels
 
 # todo make it works with yum group install "Development Tools"
 # missing uuid.so in ld
@@ -32,6 +31,6 @@ apk add                                                     \
 
 export PATH="/usr/lib/jvm/java-1.8-openjdk/bin/:$PATH"
 
-./build.sh compile
-./build.sh parcel
-./build.sh csd
+./build.sh compile "$@"
+./build.sh parcel "$@"
+./build.sh csd "$@"

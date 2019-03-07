@@ -7,11 +7,6 @@ CPUS=$(grep -c ^processor /proc/cpuinfo)
 
 . "${BASH_SOURCE%/*}/src/functions.sh"
 
-app_name="netdata"
-app_base="${PARCEL_BASE:-/opt/cloudera/parcels}/$(echo "$app_name" | awk '{print toupper($0)}')"
-parcel_dir_tmp="${TARGET_PARCEL}/${app_name}_tmp"
-parcel_dir="${TARGET_PARCEL}/${app_name}"
-
 
 function prepare_parcel_dir_tmp() {
 
@@ -143,9 +138,13 @@ function buildParcel() {
 
 function buildCSD() {
     build_cm_ext
-    build_csd "$app_name" "$NETDATA_VERSION" "$NETDATA_VERSION"
+    build_csd "$app_name" "1.0.0" "1.0.0-1"
 }
 
+app_name="${2}"
+app_base="${3:-/opt/cloudera/parcels}/$(echo "$app_name" | awk '{print toupper($0)}')"
+parcel_dir_tmp="${TARGET_PARCEL}/${app_name}_tmp"
+parcel_dir="${TARGET_PARCEL}/${app_name}"
 
 case ${1:-} in
 compile)
@@ -163,6 +162,6 @@ all)
     buildCSD
 ;;
 *)
-  error "Usage: $0 [compile|parcel|csd|all]"
+  error "Usage: $0 [compile|parcel|csd|all] <app_name> [<CM parcel path>]"
   ;;
 esac
