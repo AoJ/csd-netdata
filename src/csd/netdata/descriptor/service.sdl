@@ -1,0 +1,110 @@
+{
+  "name": "NETDATA",
+  "label": "netdata",
+  "description": "Real-time performance monitoring",
+  "version": "%VERSION%",
+  "compatibility": {
+    "cdhVersion": {
+      "min": "5.11.0"
+    }
+  },
+  "runAs": {
+    "user": "root",
+    "group": "root"
+  },
+  "inExpressWizard": true,
+  "icon": "images/icon.png",
+  "parcel": {
+    "requiredTags": [
+      "netdata"
+    ],
+    "optionalTags": [
+    ]
+  },
+  "serviceDependencies": [
+  ],
+  "parameters": [],
+  "rolesWithExternalLinks" : ["NETDATA_WEBUI_SERVER"],
+  "roles": [
+    {
+      "name": "NETDATA_WEBUI_SERVER",
+      "label": "netdata REST Server",
+      "pluralLabel": "netdata WEBUI Servers",
+      "jvmBased": true,
+      "startRunner": {
+        "program": "scripts/control.sh",
+        "args": [
+          "start"
+        ],
+        "environmentVariables": {
+          "NETDATA_SERVER_PORT": "${netdata_server_port}",
+          "NETDATA_SERVER_HOST": "${netdata_server_host}",
+          "SSL_ENABLED": "${ssl_enabled}",
+          "KEYSTORE_LOCATION": "${ssl_server_keystore_location}",
+          "KEYSTORE_PASSWORD": "${ssl_server_keystore_keypassword}",
+          "KEYSTORE_KEYPASSWORD": "${ssl_server_keystore_password}"
+        }
+      },
+      "kerberosPrincipals": [
+      ],
+      "commands": [],
+      "topology": {
+        "minInstances": 1
+      },
+      "parameters": [
+        {
+          "name": "netdata_server_port",
+          "label": "netdata WEBUI Server Port",
+          "configName": "netdata.server.port",
+          "description": "The port of the netdata server WEBUI",
+          "required": "true",
+          "type": "port",
+          "default": 19999
+        },
+        {
+          "name": "netdata_server_host",
+          "label": "netdata Bind Address",
+          "configName": "netdata.server.host",
+          "description": "What host address to start the server on.",
+          "required": "false",
+          "type": "string",
+          "default": "0.0.0.0"
+        },
+        {
+          "name": "netdata_server_history",
+          "label": "netdata server session timeout check",
+          "configName": "netdata.server.history",
+          "description": "default database size in seconds",
+          "required": "true",
+          "type": "long",
+          "unit": "seconds",
+          "min": 10,
+          "default": 3600
+        }
+      ],
+      "sslServer": {
+        "keyIdentifier": "netdata_rest_server",
+        "enabledConfigName": "netdata.ssl",
+        "keystorePasswordCredentialProviderCompatible": false,
+        "keystorePasswordScriptBased": false,
+        "keystoreKeyPasswordScriptBased": false,
+        "keystoreKeyPasswordCredentialProviderCompatible": false,
+        "keyPasswordOptionality": "required"
+      },
+      "externalLink" : {
+        "name" : "netdata_server_address",
+        "label" : "netdata Server Web UI",
+        "url" : "http://${host}:${netdata_server_port}",
+        "secureUrl" : "https://${host}:${netdata_server_port}"
+      },
+      "configWriter": {
+        "generators": [
+        ],
+        "auxConfigGenerators": [
+        ],
+        "peerConfigGenerators" : [
+        ]
+      }
+    }
+  ]
+}

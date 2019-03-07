@@ -1,0 +1,7 @@
+target/*
+!target/.gitkeep
+src_external/*
+!src_external/.gitkeep
+!src_external/*.tar
+!src_external/*.tar.gz
+

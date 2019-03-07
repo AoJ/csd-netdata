@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "name": "NETDATA",
+  "version": "%VERSION%",
+  "setActiveSymlink": true,
+
+  "provides": [
+    "netdata"
+  ],
+
+  "depends": "CDH",
+  "replaces": "",
+  "conflicts": "",
+
+  "scripts": {
+    "defines": "netdata_env.sh"
+  },
+  "groups": [],
+  "users": {},
+  "packages": [],
+  "components": []
+}
